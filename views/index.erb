@@ -2,8 +2,24 @@
   <div class="row">
     <div class="col-md-offset-4 col-md-4">
       <h1 class="bg-primary text-center p25">
-        Bootstrapped!
       </h1>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Postal Address</th>
+          <th scope="col">Distance from White House</th>
+        </tr>
+        <tbody>
+        <% addresses.each do |address| %>
+        <tr>
+          <td>
+            <%= address %>
+          </td>
+        </tr>
+        <% end %>
+        </tbody>
+        </thead>
+      </table>
     </div>
   </div>
 </div>
