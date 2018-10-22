@@ -36,7 +36,7 @@ class Address
   def miles_to(end_point)
    if self.geocoded?
     Geocoder::Calculations.distance_between(@coordinates, end_point)
-   else
+   elsee
      puts "Address not geocoded"
    end
   end
