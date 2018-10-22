@@ -1,0 +1,31 @@
+/* custom CSS goes here */
+
+.p25 {
+    padding: 25px;
+    color: white;
+}
+
+body {
+    font-family: 'Raleway',sans-serif;
+    background-image: url("https://www.airspacetechnologies.com/hs-fs/hubfs/shutterstock_380623708.jpg?t=1539998425916&width=6154&name=shutterstock_380623708.jpg");
+    background-size: cover;
+}
+
+.overlay {
+    position: absolute;
+    background: #888;
+    opacity: .8;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.bg-green {
+    background-color: rgba(33, 33, 33, 0.5);
+    border-bottom: 4px solid #61b212;
+}
+
+table {
+    background-color: white;
+}
