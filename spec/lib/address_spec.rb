@@ -3,18 +3,41 @@ RSpec.describe Address do
   let(:lat) { 40.181306 }
   let(:lng) { -80.265949 }
 
+  Geocoder.configure(lookup: :test)
+
+  before(:each) do
+    Geocoder::Lookup::Test.set_default_stub(
+        [
+            {
+                'coordinates'  => [40.181306, -80.265949],
+                'latt'         => 40.181306,
+                'longt'        => -80.265949,
+                'address'      => 'Washington, PA, USA',
+                'state'        => 'Pennsylvania',
+                'state_code'   => 'PA',
+                'country'      => 'United States',
+                'country_code' => 'US'
+            }
+        ]
+    )
+  end
+
+  after(:each) do
+    Geocoder::Lookup::Test.reset
+  end
+
   subject(:address) { described_class.new }
 
   describe 'geocoding' do
     let(:payload) {{  'longt' => lng, 'latt' => lat }}
     let(:result) { [ double(data: payload) ] }
 
-    xit 'geocodes with Geocoder API' do
+    it 'geocodes with Geocoder API' do
       expect(Geocoder).to receive(:search).with(full_address).and_return result
       address.location(full_address)
     end
 
-    xit 'is geocoded' do
+    it 'is geocoded' do
       address.location(full_address)
       expect(address).to be_geocoded
     end
@@ -35,8 +58,8 @@ RSpec.describe Address do
     
     let(:result) { [ double(data: payload) ] }
 
-    xit 'reverse geocodes with Geocoder API' do
-      expect(Geocoder).to receive(:search).with([lat, lng]).and_return result
+    it 'reverse geocodes with Geocoder API' do
+      expect(Geocoder).to receive(:address).with([lat, lng]).and_return result
       address.postal_address(lat, lng)
     end
 
@@ -50,12 +73,14 @@ RSpec.describe Address do
     let(:detroit) { FactoryGirl.build :address, :as_detroit }
     let(:kansas_city) { FactoryGirl.build :address, :as_kansas_city }
 
-    xit 'calculates distance with the Geocoder API' do
+
+    it 'calculates distance with the Geocoder API' do
       expect(Geocoder::Calculations).to receive(:distance_between).with detroit.coordinates, kansas_city.coordinates
+      detroit.miles_to(kansas_city.coordinates)
     end
 
-    xit 'returns the distance between two addresses' do
-      expect(detroit.miles_to(kansas_city)).to be > 0
+    it 'returns the distance between two addresses' do
+      expect(detroit.miles_to(kansas_city.coordinates)).to be > 0
     end
   end
 end

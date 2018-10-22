@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :address do
     lat { Faker::Address.latitude }
     lng { Faker::Address.longitude }
+    coordinates { [lat, lng] }
     full_address do
       "#{Faker::Address.street_address},#{Faker::Address.city},#{Faker::Address.state_abbr} #{Faker::Address.zip}"
     end
